@@ -15,13 +15,12 @@ jobs:
         run: docker compose build
 
       - name: Deploy to AWS
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.AWS_HOST }}
-          username: ${{ secrets.AWS_USER }}
-          key: ${{ secrets.AWS_KEY }}
-          script: |
-            cd project2
-            git pull
-            docker-compose down
-            docker-compose up -d
+        env:
+          AWS_KEY: ${{ secrets.AWS_KEY }}
+          AWS_HOST: ${{ secrets.AWS_HOST }}
+          AWS_USER: ${{ secrets.AWS_USER }}
+        run: |
+          echo "$AWS_KEY" > key.pem
+          chmod 400 key.pem
+          ssh -o StrictHostKeyChecking=no -i key.pem $AWS_USER@$AWS_HOST "cd project2 && git pull && docker-compose down && docker-compose up -d"
+          rm key.pem
