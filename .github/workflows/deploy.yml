@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: docker compose build
-
       - name: Deploy to AWS
         env:
           AWS_KEY: ${{ secrets.AWS_KEY }}
@@ -22,5 +19,5 @@ jobs:
         run: |
           echo "$AWS_KEY" > key.pem
           chmod 400 key.pem
-          ssh -o StrictHostKeyChecking=no -i key.pem $AWS_USER@$AWS_HOST "cd project2 && git pull && docker-compose down && docker-compose up -d"
+          ssh -o StrictHostKeyChecking=no -i key.pem $AWS_USER@$AWS_HOST "cd project2 && git pull && docker-compose down && docker-compose up -d --build"
           rm key.pem
