@@ -1,0 +1,22 @@
+name: Project2 Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker Image
+        run: docker compose build
+
+      - name: Run Tests
+        run: |
+          docker compose up -d
+          sleep 5
+          curl http://localhost:5000/health
+          docker compose down
