@@ -14,8 +14,7 @@ def get_db():
 
 @app.route("/")
 def home():
-    return "Project 2 — App + Database! 🚀"
-
+    return "Auto Deploy Working! Ram and Pavi 💕🚀"
 @app.route("/health")
 def health():
     return "OK"
