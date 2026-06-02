@@ -43,49 +43,55 @@ def home():
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         body {{ font-family: 'Syne', sans-serif; background: #050508; color: #fff; overflow-x: hidden; }}
 
-        /* NAV */
         nav {{ position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(5,5,8,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }}
         .logo {{ font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #00d4ff; }}
         nav ul {{ list-style: none; display: flex; gap: 40px; }}
         nav ul a {{ color: #aaa; text-decoration: none; font-size: 14px; transition: color 0.3s; font-family: 'JetBrains Mono', monospace; }}
         nav ul a:hover {{ color: #00d4ff; }}
-        .nav-badge {{ background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-family: 'JetBrains Mono', monospace; }}
+        .nav-badge {{ background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-family: 'JetBrains Mono', monospace; animation: pulse 2s infinite; }}
+        @keyframes pulse {{ 0%,100% {{ opacity:1; }} 50% {{ opacity:0.5; }} }}
 
-        /* HERO */
         .hero {{ min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }}
-        .hero-bg {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/static/bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.3); }}
-        .hero-overlay {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(5,5,8,0.3) 0%, rgba(5,5,8,0.8) 100%); }}
+        .hero-video {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; }}
+        .hero-video video {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.25); }}
+        .hero-overlay {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(5,5,8,0.4) 0%, rgba(5,5,8,0.85) 100%); }}
         .hero-content {{ position: relative; z-index: 2; max-width: 900px; padding: 20px; }}
         .hero-badge {{ display: inline-block; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 8px 20px; border-radius: 30px; font-size: 13px; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; }}
         .hero h1 {{ font-size: 72px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }}
         .hero h1 span {{ background: linear-gradient(135deg, #00d4ff, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }}
         .hero p {{ font-size: 20px; color: #ccc; margin-bottom: 40px; line-height: 1.7; }}
         .hero-btns {{ display: flex; gap: 15px; justify-content: center; }}
-        .btn-primary {{ background: linear-gradient(135deg, #00d4ff, #0099bb); color: #000; padding: 16px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 15px; }}
-        .btn-secondary {{ border: 2px solid rgba(255,255,255,0.2); color: white; padding: 16px 40px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 15px; }}
+        .btn-primary {{ background: linear-gradient(135deg, #00d4ff, #0099bb); color: #000; padding: 16px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 15px; transition: transform 0.3s; }}
+        .btn-primary:hover {{ transform: translateY(-3px); }}
+        .btn-secondary {{ border: 2px solid rgba(255,255,255,0.2); color: white; padding: 16px 40px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 15px; transition: all 0.3s; }}
+        .btn-secondary:hover {{ border-color: #00d4ff; color: #00d4ff; }}
 
-        /* STATS */
+        .floating-badges {{ display: flex; justify-content: center; gap: 15px; margin-top: 50px; flex-wrap: wrap; }}
+        .float-badge {{ background: rgba(13,13,20,0.8); border: 1px solid rgba(0,212,255,0.15); border-radius: 12px; padding: 10px 20px; display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #aaa; backdrop-filter: blur(10px); }}
+        .float-dot {{ width: 8px; height: 8px; border-radius: 50%; background: #10b981; animation: pulse 1.5s infinite; }}
+
         .stats {{ padding: 80px 60px; background: #0a0a0f; }}
         .stats-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }}
-        .stat-card {{ background: #111; border: 1px solid #222; border-radius: 20px; padding: 30px; text-align: center; }}
+        .stat-card {{ background: #111; border: 1px solid #222; border-radius: 20px; padding: 30px; text-align: center; transition: transform 0.3s; position: relative; overflow: hidden; }}
+        .stat-card:hover {{ transform: translateY(-5px); }}
+        .stat-card::before {{ content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #00d4ff, transparent); }}
         .stat-number {{ font-size: 48px; font-weight: 800; color: #00d4ff; font-family: 'JetBrains Mono', monospace; }}
-        .stat-label {{ color: #666; font-size: 13px; margin-top: 8px; }}
+        .stat-label {{ color: #666; font-size: 13px; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }}
 
-        /* GOKU SECTION */
-        .goku-section {{ padding: 80px 60px; background: #050508; display: flex; align-items: center; max-width: 1100px; margin: 0 auto; gap: 60px; }}
-        .goku-image {{ flex: 1; border-radius: 20px; overflow: hidden; border: 2px solid rgba(245,158,11,0.3); box-shadow: 0 0 60px rgba(245,158,11,0.2); }}
-        .goku-image img {{ width: 100%; height: 500px; object-fit: cover; object-position: center top; }}
-        .goku-text {{ flex: 1; }}
-        .goku-text .tag {{ font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #f59e0b; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; display: block; }}
-        .goku-text h2 {{ font-size: 42px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }}
-        .goku-text h2 span {{ color: #f59e0b; }}
-        .goku-text p {{ color: #888; font-size: 16px; line-height: 1.8; margin-bottom: 30px; }}
-        .goku-stats {{ display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }}
-        .goku-stat {{ background: #111; border: 1px solid #222; border-radius: 12px; padding: 16px; }}
-        .goku-stat-num {{ font-size: 28px; font-weight: 800; color: #f59e0b; font-family: 'JetBrains Mono', monospace; }}
-        .goku-stat-label {{ font-size: 12px; color: #666; margin-top: 4px; }}
+        .about {{ padding: 80px 60px; background: #050508; }}
+        .about-inner {{ max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 60px; }}
+        .about-image {{ flex: 1; border-radius: 20px; overflow: hidden; border: 2px solid rgba(245,158,11,0.3); box-shadow: 0 0 60px rgba(245,158,11,0.15); }}
+        .about-image img {{ width: 100%; height: 500px; object-fit: cover; object-position: center top; }}
+        .about-text {{ flex: 1; }}
+        .about-tag {{ font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #f59e0b; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; display: block; }}
+        .about-text h2 {{ font-size: 42px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }}
+        .about-text h2 span {{ color: #f59e0b; }}
+        .about-text p {{ color: #888; font-size: 16px; line-height: 1.8; margin-bottom: 16px; }}
+        .about-stats {{ display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }}
+        .about-stat {{ background: #111; border: 1px solid #222; border-radius: 12px; padding: 16px; }}
+        .about-stat-num {{ font-size: 28px; font-weight: 800; color: #f59e0b; font-family: 'JetBrains Mono', monospace; }}
+        .about-stat-label {{ font-size: 12px; color: #666; margin-top: 4px; }}
 
-        /* SKILLS */
         .skills {{ padding: 80px 60px; background: #0a0a0f; }}
         .section-header {{ text-align: center; margin-bottom: 50px; }}
         .section-tag {{ font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00d4ff; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; display: block; }}
@@ -93,14 +99,13 @@ def home():
         .section-sub {{ color: #666; font-size: 16px; }}
         .skills-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }}
         .skill-card {{ background: #111; border: 1px solid #1a1a1a; border-radius: 20px; padding: 28px; transition: all 0.3s; }}
-        .skill-card:hover {{ border-color: rgba(0,212,255,0.3); transform: translateY(-5px); }}
+        .skill-card:hover {{ border-color: rgba(0,212,255,0.3); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }}
         .skill-icon {{ font-size: 32px; margin-bottom: 14px; }}
         .skill-name {{ font-size: 17px; font-weight: 700; margin-bottom: 8px; }}
         .skill-desc {{ color: #666; font-size: 13px; line-height: 1.6; margin-bottom: 16px; }}
         .skill-bar {{ background: #222; border-radius: 10px; height: 4px; }}
         .skill-fill {{ height: 100%; border-radius: 10px; background: linear-gradient(90deg, #00d4ff, #f59e0b); }}
 
-        /* PROJECTS */
         .projects {{ padding: 80px 60px; background: #050508; }}
         .projects-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }}
         .project-card {{ background: #111; border: 1px solid #1a1a1a; border-radius: 20px; padding: 32px; transition: all 0.3s; }}
@@ -114,17 +119,16 @@ def home():
         .techs {{ display: flex; flex-wrap: wrap; gap: 8px; }}
         .tech {{ background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.15); color: #00d4ff; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-family: 'JetBrains Mono', monospace; }}
 
-        /* VISITOR */
-        .visitor {{ padding: 80px 60px; text-align: center; position: relative; overflow: hidden; }}
-        .visitor-bg {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/static/goku.jpg'); background-size: cover; background-position: center; filter: brightness(0.15); }}
-        .visitor-overlay {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,8,0.7); }}
+        .visitor {{ padding: 100px 60px; text-align: center; position: relative; overflow: hidden; }}
+        .visitor-bg {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; }}
+        .visitor-bg img {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.15); }}
+        .visitor-overlay {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,8,0.75); }}
         .visitor-content {{ position: relative; z-index: 2; }}
         .visitor h2 {{ font-size: 42px; font-weight: 800; margin-bottom: 10px; }}
         .visitor-count {{ font-size: 120px; font-weight: 800; background: linear-gradient(135deg, #00d4ff, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'JetBrains Mono', monospace; line-height: 1; margin: 20px 0; }}
         .visitor p {{ color: #888; font-size: 18px; }}
         .visitor-badge {{ display: inline-block; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2); color: #aaa; padding: 8px 20px; border-radius: 20px; font-size: 13px; margin-top: 20px; font-family: 'JetBrains Mono', monospace; }}
 
-        /* FOOTER */
         footer {{ padding: 40px 60px; border-top: 1px solid #111; display: flex; justify-content: space-between; align-items: center; background: #050508; }}
         footer .left {{ font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #555; }}
         footer .left span {{ color: #00d4ff; }}
@@ -134,10 +138,10 @@ def home():
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
     <div class="logo">&lt;sriram.dev/&gt;</div>
     <ul>
+        <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#visitors">Visitors</a></li>
@@ -145,9 +149,12 @@ def home():
     <div class="nav-badge">● Available for hire</div>
 </nav>
 
-<!-- HERO with BG.JPG -->
 <section class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-video">
+        <video autoplay muted loop playsinline>
+            <source src="/static/hero.mp4" type="video/mp4">
+        </video>
+    </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <div class="hero-badge">DevOps Engineer · Los Angeles 🌴</div>
@@ -157,10 +164,15 @@ def home():
             <a href="#projects" class="btn-primary">View Projects →</a>
             <a href="#visitors" class="btn-secondary">Live Visitors</a>
         </div>
+        <div class="floating-badges">
+            <div class="float-badge"><div class="float-dot"></div> AWS Running</div>
+            <div class="float-badge"><div class="float-dot"></div> CI/CD Active</div>
+            <div class="float-badge"><div class="float-dot"></div> Docker Live</div>
+            <div class="float-badge"><div class="float-dot"></div> DB Connected</div>
+        </div>
     </div>
 </section>
 
-<!-- STATS -->
 <section class="stats">
     <div class="stats-grid">
         <div class="stat-card">
@@ -182,40 +194,38 @@ def home():
     </div>
 </section>
 
-<!-- GOKU SECTION with GOKU.JPG -->
-<section style="padding: 80px 60px; background: #050508;">
-    <div class="goku-section" style="padding: 0;">
-        <div class="goku-image">
+<section class="about" id="about">
+    <div class="about-inner">
+        <div class="about-image">
             <img src="/static/goku.jpg" alt="Power">
         </div>
-        <div class="goku-text">
-            <span class="tag">// About Me</span>
+        <div class="about-text">
+            <span class="about-tag">// About Me</span>
             <h2>Powering Apps Like <span>Ultra Instinct</span> 😄</h2>
             <p>Just like Goku never stops training, I never stop learning. Every project I build is faster, more reliable, and more powerful than the last.</p>
-            <p style="margin-top: 16px;">From setting up CI/CD pipelines to deploying Kubernetes clusters — I make sure your app runs at full power 24/7!</p>
-            <div class="goku-stats" style="margin-top: 30px;">
-                <div class="goku-stat">
-                    <div class="goku-stat-num">99.9%</div>
-                    <div class="goku-stat-label">Uptime Goal</div>
+            <p>From setting up CI/CD pipelines to deploying Kubernetes clusters — I make sure your app runs at full power 24/7!</p>
+            <div class="about-stats">
+                <div class="about-stat">
+                    <div class="about-stat-num">99.9%</div>
+                    <div class="about-stat-label">Uptime Goal</div>
                 </div>
-                <div class="goku-stat">
-                    <div class="goku-stat-num">0</div>
-                    <div class="goku-stat-label">Manual Deploys</div>
+                <div class="about-stat">
+                    <div class="about-stat-num">0</div>
+                    <div class="about-stat-label">Manual Deploys</div>
                 </div>
-                <div class="goku-stat">
-                    <div class="goku-stat-num">24/7</div>
-                    <div class="goku-stat-label">Monitoring</div>
+                <div class="about-stat">
+                    <div class="about-stat-num">24/7</div>
+                    <div class="about-stat-label">Monitoring</div>
                 </div>
-                <div class="goku-stat">
-                    <div class="goku-stat-num">∞</div>
-                    <div class="goku-stat-label">Scalability</div>
+                <div class="about-stat">
+                    <div class="about-stat-num">∞</div>
+                    <div class="about-stat-label">Scalability</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- SKILLS -->
 <section class="skills" id="skills">
     <div class="section-header">
         <span class="section-tag">// expertise</span>
@@ -262,7 +272,6 @@ def home():
     </div>
 </section>
 
-<!-- PROJECTS -->
 <section class="projects" id="projects">
     <div class="section-header">
         <span class="section-tag">// portfolio</span>
@@ -321,9 +330,10 @@ def home():
     </div>
 </section>
 
-<!-- VISITOR with GOKU BG -->
 <section class="visitor" id="visitors">
-    <div class="visitor-bg"></div>
+    <div class="visitor-bg">
+        <img src="/static/bg.jpg" alt="bg">
+    </div>
     <div class="visitor-overlay"></div>
     <div class="visitor-content">
         <h2>🌍 Live Visitor Count</h2>
@@ -333,13 +343,12 @@ def home():
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
     <div class="left">Built by <span>Sriram Mamidala</span> · DevOps Engineer · Los Angeles 🌴</div>
     <div class="right">
         <a href="https://github.com/mamidalasriram4-hub">GitHub</a>
         <a href="#">LinkedIn</a>
-        <a href="/health">Status</a>
+        <a href="/health">Status ●</a>
     </div>
 </footer>
 
