@@ -1,7 +1,6 @@
 from flask import Flask
 import psycopg2
 import os
-from datetime import datetime
 
 app = Flask(__name__)
 
@@ -21,8 +20,7 @@ def get_visitor_count():
         cur.execute("INSERT INTO visitors DEFAULT VALUES")
         db.commit()
         cur.execute("SELECT COUNT(*) FROM visitors")
-        count = cur.fetchone()[0]
-        return count
+        return cur.fetchone()[0]
     except:
         return 0
 
@@ -30,237 +28,203 @@ def get_visitor_count():
 def home():
     count = get_visitor_count()
     return f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sriram Mamidala | DevOps Engineer</title>
-        <style>
-            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-            body {{ font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }}
-            
-            /* NAVBAR */
-            nav {{ background: rgba(0,0,0,0.9); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid #333; }}
-            nav .logo {{ font-size: 22px; font-weight: bold; color: #667eea; }}
-            nav ul {{ list-style: none; display: flex; gap: 30px; }}
-            nav ul a {{ color: #ccc; text-decoration: none; font-size: 15px; }}
-            nav ul a:hover {{ color: #667eea; }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sriram Mamidala | DevOps Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{ font-family: 'Inter', sans-serif; background: #fff; color: #111; }}
 
-            /* HERO */
-            .hero {{ min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%); padding-top: 80px; }}
-            .hero-content {{ max-width: 800px; padding: 20px; }}
-            .hero-badge {{ background: rgba(102,126,234,0.2); border: 1px solid #667eea; color: #667eea; padding: 8px 20px; border-radius: 20px; font-size: 14px; display: inline-block; margin-bottom: 20px; }}
-            .hero h1 {{ font-size: 60px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }}
-            .hero h1 span {{ background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
-            .hero p {{ font-size: 20px; color: #aaa; margin-bottom: 40px; line-height: 1.6; }}
-            .hero-btns {{ display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }}
-            .btn-primary {{ background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 16px; }}
-            .btn-secondary {{ border: 2px solid #667eea; color: #667eea; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 16px; }}
-            
-            /* STATS */
-            .stats {{ background: #111; padding: 60px 40px; }}
-            .stats-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }}
-            .stat-card {{ background: #1a1a2e; padding: 30px 20px; border-radius: 15px; border: 1px solid #333; }}
-            .stat-number {{ font-size: 40px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
-            .stat-label {{ color: #aaa; font-size: 14px; margin-top: 5px; }}
+        /* NAV */
+        nav {{ padding: 20px 80px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: white; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.05); }}
+        .logo {{ font-size: 20px; font-weight: 800; color: #3f59f6; }}
+        nav ul {{ list-style: none; display: flex; gap: 35px; }}
+        nav ul a {{ color: #555; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }}
+        nav ul a:hover {{ color: #3f59f6; }}
+        .nav-btn {{ background: #3f59f6; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s; }}
+        .nav-btn:hover {{ background: #2d47e0; }}
 
-            /* SKILLS */
-            .skills {{ padding: 80px 40px; background: #0a0a0a; }}
-            .section-title {{ text-align: center; font-size: 36px; font-weight: 800; margin-bottom: 10px; }}
-            .section-sub {{ text-align: center; color: #aaa; margin-bottom: 50px; font-size: 16px; }}
-            .skills-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }}
-            .skill-card {{ background: #111; border-radius: 15px; padding: 25px; border: 1px solid #222; transition: border-color 0.3s; }}
-            .skill-card:hover {{ border-color: #667eea; }}
-            .skill-icon {{ font-size: 36px; margin-bottom: 15px; }}
-            .skill-name {{ font-size: 18px; font-weight: bold; margin-bottom: 8px; }}
-            .skill-desc {{ color: #aaa; font-size: 14px; line-height: 1.5; }}
-            .skill-bar {{ background: #222; border-radius: 10px; height: 6px; margin-top: 15px; }}
-            .skill-fill {{ height: 100%; border-radius: 10px; background: linear-gradient(135deg, #667eea, #764ba2); }}
+        /* HERO */
+        .hero {{ padding: 100px 80px; text-align: center; background: linear-gradient(180deg, #f8f9ff 0%, #ffffff 100%); }}
+        .hero-badge {{ display: inline-block; background: #eef0ff; color: #3f59f6; padding: 8px 20px; border-radius: 50px; font-size: 13px; font-weight: 600; margin-bottom: 24px; }}
+        .hero h1 {{ font-size: 64px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; color: #111; }}
+        .hero h1 span {{ color: #3f59f6; }}
+        .hero p {{ font-size: 20px; color: #666; max-width: 600px; margin: 0 auto 40px; line-height: 1.7; }}
+        .hero-btns {{ display: flex; gap: 15px; justify-content: center; }}
+        .btn-blue {{ background: #3f59f6; color: white; padding: 16px 36px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 16px; transition: all 0.2s; box-shadow: 0 4px 20px rgba(63,89,246,0.3); }}
+        .btn-blue:hover {{ background: #2d47e0; transform: translateY(-2px); }}
+        .btn-outline {{ border: 2px solid #e0e0e0; color: #333; padding: 16px 36px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 16px; transition: all 0.2s; }}
+        .btn-outline:hover {{ border-color: #3f59f6; color: #3f59f6; }}
 
-            /* PROJECTS */
-            .projects {{ padding: 80px 40px; background: #111; }}
-            .projects-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }}
-            .project-card {{ background: #1a1a2e; border-radius: 15px; padding: 30px; border: 1px solid #333; }}
-            .project-tag {{ background: rgba(102,126,234,0.2); color: #667eea; padding: 4px 12px; border-radius: 10px; font-size: 12px; display: inline-block; margin-bottom: 15px; }}
-            .project-title {{ font-size: 20px; font-weight: bold; margin-bottom: 10px; }}
-            .project-desc {{ color: #aaa; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }}
-            .project-techs {{ display: flex; flex-wrap: wrap; gap: 8px; }}
-            .tech-badge {{ background: #0f3460; padding: 4px 12px; border-radius: 10px; font-size: 12px; color: #ccc; }}
+        /* STATS */
+        .stats {{ padding: 60px 80px; background: white; }}
+        .stats-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }}
+        .stat-card {{ background: #f8f9ff; border-radius: 16px; padding: 30px; text-align: center; border: 1px solid #eef0ff; transition: transform 0.2s; }}
+        .stat-card:hover {{ transform: translateY(-4px); }}
+        .stat-number {{ font-size: 42px; font-weight: 800; color: #3f59f6; }}
+        .stat-label {{ color: #888; font-size: 13px; margin-top: 6px; font-weight: 500; }}
 
-            /* VISITOR */
-            .visitor {{ background: linear-gradient(135deg, #667eea, #764ba2); padding: 60px 40px; text-align: center; }}
-            .visitor h2 {{ font-size: 36px; margin-bottom: 10px; }}
-            .visitor-count {{ font-size: 80px; font-weight: 800; }}
-            .visitor p {{ font-size: 18px; opacity: 0.8; margin-top: 10px; }}
+        /* SKILLS */
+        .skills {{ padding: 80px; background: #f8f9ff; }}
+        .section-header {{ text-align: center; margin-bottom: 50px; }}
+        .section-label {{ font-size: 13px; font-weight: 600; color: #3f59f6; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }}
+        .section-title {{ font-size: 40px; font-weight: 800; color: #111; margin-bottom: 12px; }}
+        .section-sub {{ color: #888; font-size: 16px; }}
+        .skills-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }}
+        .skill-card {{ background: white; border-radius: 16px; padding: 28px; border: 1px solid #eee; transition: all 0.2s; }}
+        .skill-card:hover {{ border-color: #3f59f6; transform: translateY(-4px); box-shadow: 0 10px 30px rgba(63,89,246,0.1); }}
+        .skill-icon {{ font-size: 32px; margin-bottom: 14px; }}
+        .skill-name {{ font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #111; }}
+        .skill-desc {{ color: #888; font-size: 13px; line-height: 1.6; margin-bottom: 16px; }}
+        .skill-bar {{ background: #f0f0f0; border-radius: 10px; height: 6px; }}
+        .skill-fill {{ height: 100%; border-radius: 10px; background: linear-gradient(90deg, #3f59f6, #8b5cf6); }}
 
-            /* FOOTER */
-            footer {{ background: #0a0a0a; padding: 40px; text-align: center; color: #555; border-top: 1px solid #222; }}
-        </style>
-    </head>
-    <body>
+        /* PROJECTS */
+        .projects {{ padding: 80px; background: white; }}
+        .projects-grid {{ max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }}
+        .project-card {{ background: #f8f9ff; border-radius: 16px; padding: 32px; border: 1px solid #eef0ff; transition: all 0.2s; }}
+        .project-card:hover {{ border-color: #3f59f6; transform: translateY(-4px); box-shadow: 0 10px 30px rgba(63,89,246,0.1); }}
+        .project-card.live {{ background: linear-gradient(135deg, #f0f4ff, #f8f0ff); border-color: #c7d0ff; }}
+        .project-num {{ font-size: 12px; font-weight: 600; color: #3f59f6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }}
+        .project-title {{ font-size: 20px; font-weight: 700; margin-bottom: 10px; color: #111; }}
+        .project-desc {{ color: #777; font-size: 14px; line-height: 1.7; margin-bottom: 20px; }}
+        .techs {{ display: flex; flex-wrap: wrap; gap: 8px; }}
+        .tech {{ background: white; border: 1px solid #e0e0e0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }}
+        .live-badge {{ display: inline-block; background: #dcfce7; color: #16a34a; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }}
+        .soon-badge {{ display: inline-block; background: #fef9c3; color: #ca8a04; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }}
 
-        <!-- NAVBAR -->
-        <nav>
-            <div class="logo">Sriram.dev</div>
-            <ul>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#visitors">Visitors</a></li>
-            </ul>
-        </nav>
+        /* VISITOR */
+        .visitor {{ padding: 80px; background: linear-gradient(135deg, #3f59f6, #8b5cf6); text-align: center; color: white; }}
+        .visitor h2 {{ font-size: 36px; font-weight: 800; margin-bottom: 10px; }}
+        .visitor-count {{ font-size: 100px; font-weight: 800; line-height: 1; margin: 20px 0; }}
+        .visitor p {{ font-size: 18px; opacity: 0.85; }}
+        .visitor-badge {{ display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 8px 20px; border-radius: 20px; font-size: 13px; margin-top: 20px; }}
 
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-badge">👋 Available for DevOps roles</div>
-                <h1>Hi, I'm <span>Sriram Mamidala</span></h1>
-                <p>DevOps Engineer based in Los Angeles 🌴<br>Building infrastructure that never sleeps</p>
-                <div class="hero-btns">
-                    <a href="#projects" class="btn-primary">View My Projects</a>
-                    <a href="#visitors" class="btn-secondary">Live Visitor Count</a>
-                </div>
-            </div>
-        </section>
+        /* FOOTER */
+        footer {{ padding: 40px 80px; background: #111; color: #888; display: flex; justify-content: space-between; align-items: center; }}
+        footer .left {{ font-size: 14px; }}
+        footer .left span {{ color: #3f59f6; font-weight: 600; }}
+        footer .right {{ display: flex; gap: 24px; }}
+        footer .right a {{ color: #888; text-decoration: none; font-size: 13px; transition: color 0.2s; }}
+        footer .right a:hover {{ color: white; }}
 
-        <!-- STATS -->
-        <section class="stats">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">3+</div>
-                    <div class="stat-label">Years Experience</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">{count}</div>
-                    <div class="stat-label">Live Visitors</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Projects Done</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Companies</div>
-                </div>
-            </div>
-        </section>
+        @media (max-width: 768px) {{
+            nav {{ padding: 15px 20px; }}
+            .hero {{ padding: 60px 20px; }}
+            .hero h1 {{ font-size: 36px; }}
+            .stats, .skills, .projects, .visitor {{ padding: 40px 20px; }}
+            .stats-grid, .skills-grid, .projects-grid {{ grid-template-columns: 1fr; }}
+            footer {{ padding: 30px 20px; flex-direction: column; gap: 15px; text-align: center; }}
+        }}
+    </style>
+</head>
+<body>
 
-        <!-- SKILLS -->
-        <section class="skills" id="skills">
-            <h2 class="section-title">My Skills</h2>
-            <p class="section-sub">Tools and technologies I work with daily</p>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">🐳</div>
-                    <div class="skill-name">Docker & Kubernetes</div>
-                    <div class="skill-desc">Container orchestration and microservices deployment</div>
-                    <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">☁️</div>
-                    <div class="skill-name">AWS Cloud</div>
-                    <div class="skill-desc">EC2, S3, RDS, EKS, Lambda and more</div>
-                    <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">⚙️</div>
-                    <div class="skill-name">CI/CD Pipelines</div>
-                    <div class="skill-desc">GitHub Actions, Jenkins, automated deployments</div>
-                    <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">📦</div>
-                    <div class="skill-name">Terraform</div>
-                    <div class="skill-desc">Infrastructure as Code for cloud resources</div>
-                    <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🐍</div>
-                    <div class="skill-name">Python & Bash</div>
-                    <div class="skill-desc">Scripting and automation for DevOps tasks</div>
-                    <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">📊</div>
-                    <div class="skill-name">Monitoring</div>
-                    <div class="skill-desc">Prometheus, Grafana, ELK Stack</div>
-                    <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
-                </div>
-            </div>
-        </section>
+<!-- NAV -->
+<nav>
+    <div class="logo">Sriram.dev</div>
+    <ul>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#visitors">Visitors</a></li>
+    </ul>
+    <a href="#visitors" class="nav-btn">Live Count →</a>
+</nav>
 
-        <!-- PROJECTS -->
-        <section class="projects" id="projects">
-            <h2 class="section-title">My Projects</h2>
-            <p class="section-sub">Real projects built and deployed</p>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <span class="project-tag">Project 1</span>
-                    <div class="project-title">🚀 Flask DevOps App</div>
-                    <div class="project-desc">Built and deployed a Flask web application to AWS EC2 using Docker containers with automated CI/CD pipeline via GitHub Actions.</div>
-                    <div class="project-techs">
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">Docker</span>
-                        <span class="tech-badge">AWS EC2</span>
-                        <span class="tech-badge">GitHub Actions</span>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <span class="project-tag">Project 2</span>
-                    <div class="project-title">🐘 App + Database</div>
-                    <div class="project-desc">Multi-container application with Flask and PostgreSQL using Docker Compose with fully automated deployment pipeline to AWS.</div>
-                    <div class="project-techs">
-                        <span class="tech-badge">Flask</span>
-                        <span class="tech-badge">PostgreSQL</span>
-                        <span class="tech-badge">Docker Compose</span>
-                        <span class="tech-badge">CI/CD</span>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <span class="project-tag">Coming Soon</span>
-                    <div class="project-title">☸️ Kubernetes Cluster</div>
-                    <div class="project-desc">Production grade Kubernetes deployment on AWS EKS with auto scaling, load balancing and monitoring.</div>
-                    <div class="project-techs">
-                        <span class="tech-badge">Kubernetes</span>
-                        <span class="tech-badge">AWS EKS</span>
-                        <span class="tech-badge">Helm</span>
-                        <span class="tech-badge">Prometheus</span>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <span class="project-tag">Coming Soon</span>
-                    <div class="project-title">🏗️ Terraform IaC</div>
-                    <div class="project-desc">Complete AWS infrastructure provisioned with Terraform including VPC, subnets, security groups and auto scaling groups.</div>
-                    <div class="project-techs">
-                        <span class="tech-badge">Terraform</span>
-                        <span class="tech-badge">AWS</span>
-                        <span class="tech-badge">IaC</span>
-                        <span class="tech-badge">Ansible</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">👋 Available for DevOps roles in LA</div>
+    <h1>Hi, I'm <span>Sriram Mamidala</span><br>DevOps Engineer</h1>
+    <p>Building reliable infrastructure that powers modern applications. Based in Los Angeles 🌴</p>
+    <div class="hero-btns">
+        <a href="#projects" class="btn-blue">View My Projects →</a>
+        <a href="#visitors" class="btn-outline">Live Visitor Count</a>
+    </div>
+</section>
 
-        <!-- VISITOR COUNT -->
-        <section class="visitor" id="visitors">
-            <h2>Live Visitor Count 🌍</h2>
-            <div class="visitor-count">{count}</div>
-            <p>Real visitors tracked in PostgreSQL database on AWS!</p>
-        </section>
+<!-- STATS -->
+<section class="stats">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{count}</div>
+            <div class="stat-label">Live Visitors</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">6+</div>
+            <div class="stat-label">Companies</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Projects</div>
+        </div>
+    </div>
+</section>
 
-        <!-- FOOTER -->
-        <footer>
-            <p>Built by Sriram Mamidala | DevOps Engineer | Los Angeles 🌴</p>
-            <p style="margin-top:10px">Flask • PostgreSQL • Docker • AWS • GitHub Actions</p>
-        </footer>
+<!-- SKILLS -->
+<section class="skills" id="skills">
+    <div class="section-header">
+        <div class="section-label">Expertise</div>
+        <h2 class="section-title">What I Work With</h2>
+        <p class="section-sub">Tools and technologies I use daily</p>
+    </div>
+    <div class="skills-grid">
+        <div class="skill-card">
+            <div class="skill-icon">🐳</div>
+            <div class="skill-name">Docker & Kubernetes</div>
+            <div class="skill-desc">Container orchestration and microservices deployment at scale</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">☁️</div>
+            <div class="skill-name">AWS Cloud</div>
+            <div class="skill-desc">EC2, S3, RDS, EKS, Lambda — full cloud infrastructure</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">⚙️</div>
+            <div class="skill-name">CI/CD Pipelines</div>
+            <div class="skill-desc">GitHub Actions, Jenkins — automated deployments</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">🏗️</div>
+            <div class="skill-name">Terraform</div>
+            <div class="skill-desc">Infrastructure as Code for cloud resources</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">🐍</div>
+            <div class="skill-name">Python & Bash</div>
+            <div class="skill-desc">Scripting and automation for DevOps workflows</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="skill-icon">📊</div>
+            <div class="skill-name">Monitoring</div>
+            <div class="skill-desc">Prometheus, Grafana, ELK Stack observability</div>
+            <div class="skill-bar"><div class="skill-fill" style="width:68%"></div></div>
+        </div>
+    </div>
+</section>
 
-    </body>
-    </html>
-    """
-
-@app.route("/health")
-def health():
-    return "OK"
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+    <div class="section-header">
+        <div class="section-label">Portfolio</div>
+        <h2 class="section-title">Projects Built</h2>
+        <p class="section-sub">Real infrastructure deployed to production</p>
+    </div>
+    <div class="projects-grid">
+        <div class="project-card live">
+            <div class="live-badge">🟢 Live on AWS</div>
+            <div class="project-num">Project 01</div>
+            <div class="project-title">🚀 Flask DevOps Pipeline</div>
+            <div class="project-desc"
