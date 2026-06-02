@@ -53,7 +53,7 @@ def home():
 
         .hero {{ min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }}
         .hero-video {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; }}
-        .hero-video video {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }}
+        .hero-video video {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.-5); }}
         .hero-overlay {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(5,5,8,0.4) 0%, rgba(5,5,8,0.85) 100%); }}
         .hero-content {{ position: relative; z-index: 2; max-width: 900px; padding: 20px; }}
         .hero-badge {{ display: inline-block; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 8px 20px; border-radius: 30px; font-size: 13px; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; }}
