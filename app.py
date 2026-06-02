@@ -62,7 +62,7 @@ def home():
         /* HERO */
         .hero {{ min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }}
         .hero-video {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; }}
-        .hero-video video {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.3); }}
+        .hero-video video {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.-10); }}
         .hero-overlay {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(5,5,8,0.3) 0%, rgba(5,5,8,0.9) 100%); }}
         .hero-content {{ position: relative; z-index: 2; max-width: 1000px; padding: 20px; }}
         .hero-tag {{ display: inline-flex; align-items: center; gap: 8px; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 8px 20px; border-radius: 30px; font-size: 13px; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px; animation: fadeDown 1s ease both; }}
