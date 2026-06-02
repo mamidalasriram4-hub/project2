@@ -227,4 +227,78 @@ def home():
             <div class="live-badge">🟢 Live on AWS</div>
             <div class="project-num">Project 01</div>
             <div class="project-title">🚀 Flask DevOps Pipeline</div>
-            <div class="project-desc"
+            <div class="project-desc">Flask web app deployed to AWS EC2 with Docker and automated CI/CD pipeline using GitHub Actions.</div>
+            <div class="techs">
+                <span class="tech">Python</span>
+                <span class="tech">Docker</span>
+                <span class="tech">AWS EC2</span>
+                <span class="tech">GitHub Actions</span>
+            </div>
+        </div>
+        <div class="project-card live">
+            <div class="live-badge">🟢 You Are Here!</div>
+            <div class="project-num">Project 02</div>
+            <div class="project-title">🐘 App + Database</div>
+            <div class="project-desc">Flask + PostgreSQL in Docker Compose. Auto-deploys to AWS on every git push. Live visitor tracking!</div>
+            <div class="techs">
+                <span class="tech">Flask</span>
+                <span class="tech">PostgreSQL</span>
+                <span class="tech">Docker Compose</span>
+                <span class="tech">Auto Deploy</span>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="soon-badge">🔜 Coming Soon</div>
+            <div class="project-num">Project 03</div>
+            <div class="project-title">☸️ Kubernetes Cluster</div>
+            <div class="project-desc">Production Kubernetes on AWS EKS with auto-scaling, load balancing and full monitoring stack.</div>
+            <div class="techs">
+                <span class="tech">Kubernetes</span>
+                <span class="tech">AWS EKS</span>
+                <span class="tech">Helm</span>
+                <span class="tech">Prometheus</span>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="soon-badge">🔜 Coming Soon</div>
+            <div class="project-num">Project 04</div>
+            <div class="project-title">🏗️ Terraform IaC</div>
+            <div class="project-desc">Complete AWS infrastructure as code — VPC, subnets, security groups, RDS and auto scaling.</div>
+            <div class="techs">
+                <span class="tech">Terraform</span>
+                <span class="tech">AWS VPC</span>
+                <span class="tech">IaC</span>
+                <span class="tech">Ansible</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VISITOR COUNT -->
+<section class="visitor" id="visitors">
+    <h2>🌍 Live Visitor Count</h2>
+    <div class="visitor-count">{count}</div>
+    <p>Every visit is tracked in a real PostgreSQL database running on AWS!</p>
+    <div class="visitor-badge">🐘 PostgreSQL · 🐳 Docker · ☁️ AWS EC2</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="left">Built by <span>Sriram Mamidala</span> · DevOps Engineer · Los Angeles 🌴</div>
+    <div class="right">
+        <a href="https://github.com/mamidalasriram4-hub">GitHub</a>
+        <a href="#">LinkedIn</a>
+        <a href="/health">Status ●</a>
+    </div>
+</footer>
+
+</body>
+</html>
+    """
+
+@app.route("/health")
+def health():
+    return "OK"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
