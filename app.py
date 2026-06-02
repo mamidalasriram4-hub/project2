@@ -17,7 +17,7 @@ def home():
     return """
     <html>
     <body style="font-family:Arial; text-align:center; padding:50px; background:#f0f0f0">
-        <h1>🚀 Ram and Pavi DevOps App</h1>
+        <h1>🚀 Ram and Pavi DevOps App v2.0</h1>
         <p>Built with Flask + PostgreSQL + Docker + AWS</p>
         <h3>Visitors:</h3>
         <a href="/add">Add Visit</a> | 
