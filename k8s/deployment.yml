@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project2-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: project2-app
+  template:
+    metadata:
+      labels:
+        app: project2-app
+    spec:
+      containers:
+      - name: project2-app
+        image: 230650392308.dkr.ecr.us-east-1.amazonaws.com/project2-app:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_HOST
+          value: "db"
+        - name: DB_NAME
+          value: "devops"
+        - name: DB_USER
+          value: "ram"
+        - name: DB_PASS
+          value: "pavi123"

@@ -62,7 +62,7 @@ def home():
         /* HERO */
         .hero {{ min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }}
         .hero-video {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; }}
-        .hero-video video {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.-10); }}
+        .hero-video video {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.-5); }}
         .hero-overlay {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(5,5,8,0.3) 0%, rgba(5,5,8,0.9) 100%); }}
         .hero-content {{ position: relative; z-index: 2; max-width: 1000px; padding: 20px; }}
         .hero-tag {{ display: inline-flex; align-items: center; gap: 8px; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 8px 20px; border-radius: 30px; font-size: 13px; font-family: 'JetBrains Mono', monospace; margin-bottom: 30px; animation: fadeDown 1s ease both; }}
@@ -160,7 +160,7 @@ def home():
         /* VISITOR */
         .visitor {{ padding: 120px 80px; text-align: center; position: relative; overflow: hidden; }}
         .visitor-bg {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; }}
-        .visitor-bg img {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.1) saturate(0.5); }}
+        .visitor-bg img {{ width: 100%; height: 100%; object-fit: cover; filter: brightness(0.-10) saturate(0.5); }}
         .visitor-overlay {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at center, rgba(0,212,255,0.08) 0%, rgba(5,5,8,0.95) 70%); }}
         .visitor-content {{ position: relative; z-index: 2; }}
         .visitor-eyebrow {{ font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00d4ff; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px; display: block; }}
@@ -215,7 +215,7 @@ def home():
         <div class="hero-tag">DevOps Engineer · Los Angeles 🌴</div>
         <h1>
             <span class="line1">Infrastructure That</span>
-            <span class="line2">Never Sleeps.</span>
+            <span class="line2">Never Sleeps. 🔥 Powered by Kubernetes!.</span>
         </h1>
         <p>Hi, I'm Sriram Mamidala. I build, automate and deploy production systems using Docker, AWS, Kubernetes and CI/CD pipelines.</p>
         <div class="hero-btns">
