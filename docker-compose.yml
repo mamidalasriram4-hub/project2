@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
   app:
     build: .
     ports:
-      - "5000:5000"
+      - "80:80"
     environment:
       - DB_HOST=db
       - DB_NAME=devops
@@ -21,6 +19,27 @@ services:
       - POSTGRES_PASSWORD=pavi123
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=pavi123
+    depends_on:
+      - prometheus
+
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
 
 volumes:
   postgres_data:
