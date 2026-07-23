@@ -283,7 +283,7 @@ def home():
 <section class="about" id="about">
     <div class="about-inner">
         <div class="about-img-wrap reveal">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="Tech workspace">
+            <img src="/static/de.jpg" alt="DevOps pipeline">
         </div>
         <div class="reveal">
             <span class="about-tag">// About Me</span>
@@ -424,7 +424,7 @@ def home():
 
 <section class="visitor" id="visitors">
     <div class="visitor-bg">
-        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="Tech background">
+        <img src="/static/dev.jpg" alt="DevOps pipeline">
     </div>
     <div class="visitor-overlay"></div>
     <div class="visitor-content reveal">
