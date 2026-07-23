@@ -207,8 +207,8 @@ def home():
 <section class="hero">
     <div class="hero-video">
         <video autoplay muted loop playsinline>
-            
-        </div>
+            <source src="/static/hero.mp4" type="video/mp4">
+        </video>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -283,7 +283,7 @@ def home():
 <section class="about" id="about">
     <div class="about-inner">
         <div class="about-img-wrap reveal">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="Tech workspace">
+            <img src="/static/goku.jpg" alt="Sriram">
         </div>
         <div class="reveal">
             <span class="about-tag">// About Me</span>
@@ -424,7 +424,7 @@ def home():
 
 <section class="visitor" id="visitors">
     <div class="visitor-bg">
-        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="Tech background">
+        <img src="/static/bg.jpg" alt="bg">
     </div>
     <div class="visitor-overlay"></div>
     <div class="visitor-content reveal">
